@@ -70,7 +70,7 @@ def convert_by_file_name(file_name: Path, fast_mode=False, suffix=None):
         print(f"Error converting {file_name}: {str(e)}")
         sys.exit(1)
 
-if __name__ == "__main__":
+def main():
     parser = argparse.ArgumentParser(description='Convert files to markdown')
     parser.add_argument('input_file', help='File to convert')
     parser.add_argument('--fast', action='store_true', help='Fast mode - skip image transcription')
@@ -80,3 +80,6 @@ if __name__ == "__main__":
     input_file = Path(args.input_file)
     
     convert_by_file_name(input_file, fast_mode=args.fast, suffix=args.suffix)
+    
+if __name__ == "__main__":
+    main()

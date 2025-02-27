@@ -53,16 +53,23 @@ Use a custom suffix for the output filename:
 python convert_to_md.py path/to/file --suffix "_md"
 ```
 
-Using UV (without installing):
+Using UV:
 ```bash
-# Run the local script
+# Run the local script without installing
 uv run -s convert_to_md.py path/to/file
+
+# Run after installing the package
+uv pip install -e .
+uv tool run convert-to-md path/to/file
 ```
 
 Run directly from GitHub without installation (ephemeral):
 ```bash
-# Run the latest version directly from GitHub
-uvx --from git+https://github.com/organisciak/convert-to-markdown convert_to_md.py path/to/file
+# Run the latest version directly from GitHub (fast mode - no API key needed)
+uvx --from git+https://github.com/organisciak/convert-to-markdown convert-to-md path/to/file --fast
+
+# Run with image transcription (if API key is not already in environment)
+OPENAI_API_KEY=your_api_key_here uvx --from git+https://github.com/organisciak/convert-to-markdown convert-to-md path/to/file
 ```
 
 ### macOS Quick Action Setup

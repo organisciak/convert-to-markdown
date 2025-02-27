@@ -10,3 +10,6 @@ dependencies = [
     "python-dotenv>=1.0.1",
     "uv>=0.6.3",
 ]
+
+[project.scripts]
+convert-to-md = "convert_to_md:main"
