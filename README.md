@@ -48,9 +48,21 @@ Skip image transcription with fast mode:
 python convert_to_md.py path/to/file --fast
 ```
 
+Use a custom suffix for the output filename:
+```bash
+python convert_to_md.py path/to/file --suffix "_md"
+```
+
 Using UV (without installing):
 ```bash
+# Run the local script
 uv run -s convert_to_md.py path/to/file
+```
+
+Run directly from GitHub without installation (ephemeral):
+```bash
+# Run the latest version directly from GitHub
+uvx --from git+https://github.com/organisciak/convert-to-markdown convert_to_md.py path/to/file
 ```
 
 ### macOS Quick Action Setup

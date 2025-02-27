@@ -35,7 +35,7 @@ from markitdown import MarkItDown
 # Load environment variables early
 load_dotenv()
 
-def convert_by_file_name(file_name: Path, fast_mode=False):
+def convert_by_file_name(file_name: Path, fast_mode=False, suffix=None):
     if not file_name.exists():
         print(f"File {file_name} does not exist")
         sys.exit(1)
@@ -44,8 +44,10 @@ def convert_by_file_name(file_name: Path, fast_mode=False):
         print(f"Input {file_name} is a directory")
         sys.exit(1)
 
-    # Add '_fast' suffix when in fast mode
-    suffix = '_converted_fast' if fast_mode else '_converted'
+    # Use provided suffix or default based on mode
+    if suffix is None:
+        suffix = '_converted_fast' if fast_mode else '_converted'
+    
     output_file = file_name.with_stem(file_name.stem + suffix).with_suffix(".md")
     
     # Initialize MarkItDown with or without image transcription
@@ -72,8 +74,9 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Convert files to markdown')
     parser.add_argument('input_file', help='File to convert')
     parser.add_argument('--fast', action='store_true', help='Fast mode - skip image transcription')
+    parser.add_argument('--suffix', type=str, help='Custom suffix for output filename (default: "_converted" or "_converted_fast")')
     
     args = parser.parse_args()
     input_file = Path(args.input_file)
     
-    convert_by_file_name(input_file, fast_mode=args.fast)
+    convert_by_file_name(input_file, fast_mode=args.fast, suffix=args.suffix)
