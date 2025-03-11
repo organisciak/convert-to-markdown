@@ -196,7 +196,7 @@ name = "convert-to-markdown"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
-    { name = "markitdown" },
+    { name = "markitdown", extra = ["all"] },
     { name = "openai" },
     { name = "python-dotenv" },
     { name = "uv" },
@@ -204,7 +204,7 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
-    { name = "markitdown", specifier = ">=0.0.1a4" },
+    { name = "markitdown", extras = ["all"], specifier = "~=0.1.0a1" },
     { name = "openai", specifier = ">=1.64.0" },
     { name = "python-dotenv", specifier = ">=1.0.1" },
     { name = "uv", specifier = ">=0.6.3" },
@@ -402,33 +402,35 @@ wheels = [
 
 [[package]]
 name = "markitdown"
-version = "0.0.1a4"
+version = "0.1.0a1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "azure-ai-documentintelligence" },
-    { name = "azure-identity" },
     { name = "beautifulsoup4" },
     { name = "charset-normalizer" },
-    { name = "mammoth" },
     { name = "markdownify" },
-    { name = "numpy" },
+    { name = "pathvalidate" },
+    { name = "puremagic" },
+    { name = "requests" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/e4/20/f4d26a9946c851894ac099f690d55389c842e93a59951289654b4e8dec39/markitdown-0.1.0a1.tar.gz", hash = "sha256:f4d5b1eb4ee7757ec8e41c1205d6a33ae846ae366d0aec2ba56718b64b395b14", size = 28243 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/1a/c5/1a37e25089c93ff701d226a9682e2270c83dd02c2547abd4078051114776/markitdown-0.1.0a1-py3-none-any.whl", hash = "sha256:a5b35730c8c9d7c46a91f43b5dcf82d1677c8b3d5b8accc3bd18209c139ae361", size = 43950 },
+]
+
+[package.optional-dependencies]
+all = [
+    { name = "azure-ai-documentintelligence" },
+    { name = "azure-identity" },
+    { name = "mammoth" },
     { name = "olefile" },
-    { name = "openai" },
     { name = "openpyxl" },
     { name = "pandas" },
-    { name = "pathvalidate" },
     { name = "pdfminer-six" },
-    { name = "puremagic" },
     { name = "pydub" },
     { name = "python-pptx" },
-    { name = "requests" },
     { name = "speechrecognition" },
     { name = "xlrd" },
     { name = "youtube-transcript-api" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/95/b2/41f94884f481d66539e5377f76b8e564d4cf54cba45c1f1a2bcd47949e43/markitdown-0.0.1a4.tar.gz", hash = "sha256:8bf738cf3d2a26efb0edde9eb109a53886a4550c0df12b17418182cd30ab1dde", size = 21563 }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/5f/24/f2de79bc50c82d63d243834b67af4ed3ae8b8bf71652aecc6118d4d1a306/markitdown-0.0.1a4-py3-none-any.whl", hash = "sha256:9fc78bb7b83dee13852d8a4b262066dcc7a5a1aac88924f0f29aa239ec9fbfec", size = 21934 },
 ]
 
 [[package]]
@@ -607,7 +609,7 @@ name = "portalocker"
 version = "2.10.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "pywin32", marker = "sys_platform == 'win32'" },
+    { name = "pywin32", marker = "platform_system == 'Windows'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/ed/d3/c6c64067759e87af98cc668c1cc75171347d0f1577fab7ca3749134e3cd4/portalocker-2.10.1.tar.gz", hash = "sha256:ef1bf844e878ab08aee7e40184156e1151f228f103aa5c6bd0724cc330960f8f", size = 40891 }
 wheels = [
@@ -832,7 +834,7 @@ name = "tqdm"
 version = "4.67.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "colorama", marker = "sys_platform == 'win32'" },
+    { name = "colorama", marker = "platform_system == 'Windows'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/a8/4b/29b4ef32e036bb34e4ab51796dd745cdba7ed47ad142a9f4a1eb8e0c744d/tqdm-4.67.1.tar.gz", hash = "sha256:f8aef9c52c08c13a65f30ea34f4e5aac3fd1a34959879d7e59e63027286627f2", size = 169737 }
 wheels = [
