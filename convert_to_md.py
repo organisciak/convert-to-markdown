@@ -1,6 +1,6 @@
 # /// script
 # dependencies = [
-#     "markitdown",
+#     "markitdown[all]",
 #     "openai",
 #     "python-dotenv",
 # ]
@@ -35,7 +35,7 @@ from markitdown import MarkItDown
 # Load environment variables early
 load_dotenv()
 
-def convert_by_file_name(file_name: Path, fast_mode=False, suffix=None):
+def convert_by_file_name(file_name: Path, fast_mode=False, suffix=None, output_path=None):
     if not file_name.exists():
         print(f"File {file_name} does not exist")
         sys.exit(1)
@@ -48,7 +48,15 @@ def convert_by_file_name(file_name: Path, fast_mode=False, suffix=None):
     if suffix is None:
         suffix = '_converted_fast' if fast_mode else '_converted'
     
-    output_file = file_name.with_stem(file_name.stem + suffix).with_suffix(".md")
+    if output_path == '-':
+        output_file = None  # Will write to stdout
+    elif output_path:
+        output_file = Path(output_path)
+        # If output_path is a directory, append the filename
+        if output_file.is_dir():
+            output_file = output_file / (file_name.stem + suffix + ".md")
+    else:
+        output_file = file_name.with_stem(file_name.stem + suffix).with_suffix(".md")
     
     # Initialize MarkItDown with or without image transcription
     if fast_mode:
@@ -61,11 +69,13 @@ def convert_by_file_name(file_name: Path, fast_mode=False, suffix=None):
         # Convert the file
         result = md.convert(str(file_name))
         
-        # Write the result to file
-        with open(output_file, 'w', encoding='utf-8') as md_file:
-            md_file.write(result.text_content)
-        
-        print(f"Converted {file_name} to {output_file}")
+        # Write the result to file or stdout
+        if output_file is None:
+            print(result.text_content)
+        else:
+            with open(output_file, 'w', encoding='utf-8') as md_file:
+                md_file.write(result.text_content)
+            print(f"Converted {file_name} to {output_file}")
     except Exception as e:
         print(f"Error converting {file_name}: {str(e)}")
         sys.exit(1)
@@ -74,12 +84,13 @@ def main():
     parser = argparse.ArgumentParser(description='Convert files to markdown')
     parser.add_argument('input_file', help='File to convert')
     parser.add_argument('--fast', action='store_true', help='Fast mode - skip image transcription')
-    parser.add_argument('--suffix', type=str, help='Custom suffix for output filename (default: "_converted" or "_converted_fast")')
+    parser.add_argument('--suffix', '-s', type=str, help='Custom suffix for output filename (default: "_converted" or "_converted_fast")')
+    parser.add_argument('--output', '-o', type=str, help='Custom output path for the markdown file')
     
     args = parser.parse_args()
     input_file = Path(args.input_file)
     
-    convert_by_file_name(input_file, fast_mode=args.fast, suffix=args.suffix)
+    convert_by_file_name(input_file, fast_mode=args.fast, suffix=args.suffix, output_path=args.output)
     
 if __name__ == "__main__":
     main()
